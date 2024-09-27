@@ -1,7 +1,6 @@
 package services
 
 import (
-	"fmt"
 	"mime/multipart"
 	"net/http"
 	"strings"
@@ -64,7 +63,6 @@ func readFile(file *multipart.FileHeader) ([]models.Keyword, error) {
 
 	for _, keyword := range data {
 		var skill models.Keyword
-		fmt.Println("hahha", util.Contains(skills, keyword))
 		if strings.Contains(text, strings.ToLower(keyword.Keyword)) && !util.Contains(skills, keyword) {
 			skill.Id = keyword.Id
 			skill.Keyword = keyword.Keyword
