@@ -1,7 +1,6 @@
 package services
 
 import (
-	"fmt"
 	"mime/multipart"
 	"net/http"
 	"strings"
@@ -22,11 +21,13 @@ func Scan(c *gin.Context) {
 
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"code": 500, "message": "Failed to upload the file"})
+		return
 	}
 
 	skills, err := readFile(file)
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"code": 500, "message": "Could not read file"})
+		return
 	}
 
 	c.JSON(http.StatusOK, gin.H{"code": 200, "data": skills})
@@ -47,7 +48,6 @@ func readFile(file *multipart.FileHeader) ([]models.Keyword, error) {
 	var skills []models.Keyword
 
 	text := strings.ToLower(fileData.Body)
-	fmt.Println(text)
 
 	for _, keyword := range data {
 		var skill models.Keyword
